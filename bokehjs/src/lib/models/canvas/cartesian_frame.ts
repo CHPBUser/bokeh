@@ -7,7 +7,7 @@ import {Range1d} from "../ranges/range1d"
 import {DataRange1d} from "../ranges/data_range1d"
 import {FactorRange} from "../ranges/factor_range"
 
-import {Layoutable} from "core/layout/layout_canvas"
+import {HasProps} from "core/has_props"
 import {Arrayable} from "core/types"
 import * as p from "core/properties"
 
@@ -15,7 +15,7 @@ export type Ranges = {[key: string]: Range}
 export type Scales = {[key: string]: Scale}
 
 export namespace CartesianFrame {
-  export interface Attrs extends Layoutable.Attrs {
+  export interface Attrs extends HasProps.Attrs {
     extra_x_ranges: Ranges
     extra_y_ranges: Ranges
     x_range: Range
@@ -24,12 +24,12 @@ export namespace CartesianFrame {
     y_scale: Scale
   }
 
-  export interface Props extends Layoutable.Props {}
+  export interface Props extends HasProps.Props {}
 }
 
 export interface CartesianFrame extends CartesianFrame.Attrs {}
 
-export class CartesianFrame extends Layoutable {
+export class CartesianFrame extends HasProps {
 
   constructor(attrs?: Partial<CartesianFrame.Attrs>) {
     super(attrs)
@@ -65,10 +65,6 @@ export class CartesianFrame extends Layoutable {
   connect_signals(): void {
     super.connect_signals()
     this.connect(this.change, () => this._configure_scales())
-  }
-
-  get panel(): Layoutable {
-    return this
   }
 
   map_to_screen(x: Arrayable<number>, y: Arrayable<number>,
